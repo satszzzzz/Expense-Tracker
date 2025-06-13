@@ -1,0 +1,6 @@
+
+
+@AllArg
+public class UserInfoProducer {
+
+}
