@@ -3,6 +3,7 @@ package org.example.service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.entities.UserInfo;
+//import org.example.eventProducer.UserInfoProducer;
 import org.example.model.UserInfoDto;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class UserDetailsServiceImplementation implements UserDetailsService
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
@@ -50,6 +52,7 @@ public class UserDetailsServiceImplementation implements UserDetailsService
         if(Objects.nonNull(checkIfAlreadyExists(userInfoDto)))
             return false;
         userRepository.save(new UserInfo(UUID.randomUUID().toString(), userInfoDto.getUsername(), userInfoDto.getPassword(), new HashSet<>()));
+
         return true;
     }
 }
