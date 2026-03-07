@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.entities.UserInfo;
 //import org.example.eventProducer.UserInfoProducer;
+import org.example.eventProducer.UserInfoProducer;
 import org.example.model.UserInfoDto;
+import org.example.model.UserInfoEvent;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +29,9 @@ public class UserDetailsServiceImplementation implements UserDetailsService
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private final UserInfoProducer userInfoProducer;
 
 
     @Override
@@ -51,8 +56,20 @@ public class UserDetailsServiceImplementation implements UserDetailsService
         userInfoDto.setPassword(passwordEncoder.encode(userInfoDto.getPassword()));
         if(Objects.nonNull(checkIfAlreadyExists(userInfoDto)))
             return false;
-        userRepository.save(new UserInfo(UUID.randomUUID().toString(), userInfoDto.getUsername(), userInfoDto.getPassword(), new HashSet<>()));
-
+        String user_id = UUID.randomUUID().toString();
+        userRepository.save(new UserInfo(user_id, userInfoDto.getUsername(), userInfoDto.getPassword(), new HashSet<>()));
+        userInfoProducer.sentToTopic(transform(userInfoDto));
         return true;
+    }
+
+    private UserInfoEvent transform(UserInfoDto userInfoDto)
+    {
+        return UserInfoEvent.builder()
+                .firstName(userInfoDto.getFirstName())
+                .lastName(userInfoDto.getLastName())
+                .email(userInfoDto.getEmail())
+                .phoneNumber(userInfoDto.getPhoneNumber())
+                .profilePic(userInfoDto.getProfilePic())
+                .build();
     }
 }
