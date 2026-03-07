@@ -1,3 +1,16 @@
+package org.example.eventProducer;
+
+import lombok.AllArgsConstructor;
+import org.example.entities.UserInfo;
+import org.example.model.UserInfoDto;
+import org.example.model.UserInfoEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
+
 //package org.example.eventProducer;
 //
 //import lombok.AllArgsConstructor;
@@ -12,24 +25,24 @@
 //import org.springframework.messaging.support.MessageBuilder;
 //import org.springframework.stereotype.Service;
 //
-//@AllArgsConstructor
-//@Service
-//public class UserInfoProducer {
-//
-//    @Autowired
-//    private KafkaTemplate<String, UserInfo> kafkaTemplate;
-//
-//    @Value("${spring.kafka.topic.name}")
-//    private String TOPIC_NAME;
-//
-//    public void sentToTopic(UserInfoDto userInfoDto)
-//    {
-//        Message<UserInfoDto> message = MessageBuilder.withPayload(userInfoDto)
-//                .setHeader(KafkaHeaders.TOPIC, TOPIC_NAME).build();
-//
-//    }
-//
-//}
+@AllArgsConstructor
+@Service
+public class UserInfoProducer {
+
+    @Autowired
+    private KafkaTemplate<String, UserInfoEvent> kafkaTemplate;
+
+    @Value("${spring.kafka.topic.name}")
+    private String TOPIC_NAME;
+
+    public void sentToTopic(UserInfoEvent userInfoEvent)
+    {
+        Message<UserInfoDto> message = MessageBuilder.withPayload(userInfoEvent)
+                .setHeader(KafkaHeaders.TOPIC, TOPIC_NAME).build();
+
+    }
+
+}
 
 
 /*
