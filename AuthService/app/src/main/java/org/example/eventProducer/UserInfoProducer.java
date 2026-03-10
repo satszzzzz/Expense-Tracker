@@ -5,6 +5,7 @@ import org.example.entities.UserInfo;
 import org.example.model.UserInfoDto;
 import org.example.model.UserInfoEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -25,9 +26,10 @@ import org.springframework.stereotype.Service;
 //import org.springframework.messaging.support.MessageBuilder;
 //import org.springframework.stereotype.Service;
 //
-@AllArgsConstructor
 @Service
 public class UserInfoProducer {
+
+    static int counter =0;
 
     @Autowired
     private KafkaTemplate<String, UserInfoEvent> kafkaTemplate;
@@ -37,8 +39,12 @@ public class UserInfoProducer {
 
     public void sentToTopic(UserInfoEvent userInfoEvent)
     {
-        Message<UserInfoDto> message = MessageBuilder.withPayload(userInfoEvent)
-                .setHeader(KafkaHeaders.TOPIC, TOPIC_NAME).build();
+//        Message<UserInfoEvent> message = MessageBuilder.withPayload(userInfoEvent)
+//                .setHeader(KafkaHeaders.TOPIC, TOPIC_NAME).build();
+        counter+=1;
+        System.out.println(userInfoEvent.toString());
+        System.out.println("Serializer: " + kafkaTemplate.getProducerFactory().getConfigurationProperties());
+        kafkaTemplate.send(TOPIC_NAME, String.valueOf(counter) , userInfoEvent);
 
     }
 

@@ -58,13 +58,14 @@ public class UserDetailsServiceImplementation implements UserDetailsService
             return false;
         String user_id = UUID.randomUUID().toString();
         userRepository.save(new UserInfo(user_id, userInfoDto.getUsername(), userInfoDto.getPassword(), new HashSet<>()));
-        userInfoProducer.sentToTopic(transform(userInfoDto));
+        userInfoProducer.sentToTopic(transform(userInfoDto, user_id));
         return true;
     }
 
-    private UserInfoEvent transform(UserInfoDto userInfoDto)
+    private UserInfoEvent transform(UserInfoDto userInfoDto, String userId)
     {
         return UserInfoEvent.builder()
+                .userId(userId)
                 .firstName(userInfoDto.getFirstName())
                 .lastName(userInfoDto.getLastName())
                 .email(userInfoDto.getEmail())

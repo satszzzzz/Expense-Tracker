@@ -1,11 +1,12 @@
 package com.example.UserService.deserializer;
 
-import com.example.UserService.entities.UserInfoDto;
+import com.example.UserService.entities.UserInfoEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;
 
-public class UserInfoDtoDeserializer implements Deserializer<UserInfoDto>
+public class UserInfoDtoDeserializer implements Deserializer<UserInfoEvent>
 {
 
     @Override
@@ -14,18 +15,19 @@ public class UserInfoDtoDeserializer implements Deserializer<UserInfoDto>
     }
 
     @Override
-    public UserInfoDto deserialize(String s, byte[] bytes) {
+    public UserInfoEvent deserialize(String s, byte[] bytes) {
         ObjectMapper objectMapper = new ObjectMapper();
-        UserInfoDto user = null;
+        System.out.println(bytes);
+        UserInfoEvent userDto = null;
         try
         {
-            user = objectMapper.readValue(bytes, UserInfoDto.class);
+            userDto = objectMapper.readValue(bytes, UserInfoEvent.class);
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
-        return user;
+        return userDto;
     }
 
     @Override
