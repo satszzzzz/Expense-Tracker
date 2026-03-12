@@ -1,0 +1,29 @@
+_format_version: "2.1"
+
+services:
+  - name : auth-service
+    url: http://auth-service:8080
+    routes:
+      - name: auth-signup
+        paths:
+          - /auth/v1/signup
+        strip_path: false
+      - name: auth-login
+        paths:
+          - /auth/v1/login
+        strip_path: false
+      - name: auth-refresh-token
+        paths:
+          - /auth/v1/refresh-token
+        strip_path: false
+  - name: user-service
+    url: http://user-service:8090
+    routes:
+      - name: user-create-or-update
+        paths:
+          - /user/v1/createOrUpdate
+        strip_path: false
+      - name: user-get
+        paths:
+          - /users/v1/getUser
+        strip_path: false
