@@ -103,7 +103,7 @@ services:
     ports:
      - "8010:8010"
     env_file:
-      - ./DatascienceService/.envgit
+      - ./DatascienceService/.env
     depends_on:
      - kafka 
       
