@@ -102,8 +102,8 @@ services:
     container_name: ds-service
     ports:
      - "8010:8010"
-    environment:
-     GROQ_API_KEY: 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
+    env_file:
+     - ./DatascienceService/.env
     depends_on:
      - kafka 
       
