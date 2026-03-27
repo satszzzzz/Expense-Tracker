@@ -1,19 +1,4 @@
 services:
-  # authService:
-  #   build: ./AuthService/
-  #   container_name: auth-service
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - database
-  #   ENV:
-  #     SERVER_PORT: 8080
-  #     MYSQQL_HOST: mysql
-  #     MYSQQL_PORT: 3306
-  #     MYSQL_DB: authService
-  #     MYSQL_USER: root
-  #     MYSQL_PASSWORD: admin
-
   mysql:
     image: mysql:8
     ports:
@@ -112,6 +97,15 @@ services:
     depends_on:
       - auth-service
       - user-service
+  ds-service:
+    build: ./DatascienceService/
+    container_name: ds-service
+    ports:
+     - "8010:8010"
+    environment:
+     GROQ_API_KEY: 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
+    depends_on:
+     - kafka 
       
 volumes:
   mysql-data:
