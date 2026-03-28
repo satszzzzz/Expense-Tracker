@@ -13,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="Expense")
 public class Expense {
@@ -44,6 +45,7 @@ public class Expense {
     @PreUpdate
     private void generateExternalId()
     {
-        this.externalId = UUID.randomUUID().toString();
+        if(externalId==null)
+            this.externalId = UUID.randomUUID().toString();
     }
 }

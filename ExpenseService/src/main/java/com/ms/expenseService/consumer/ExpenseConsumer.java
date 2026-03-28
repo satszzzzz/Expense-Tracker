@@ -12,11 +12,11 @@ public class ExpenseConsumer {
 
     private ExpenseService expenseService;
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = "${spring.kafka.topic-json.name}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(ExpenseDto expenseDto)
     {
         try{
-
+            expenseService.createExpense(expenseDto);
         }
         catch(Exception e)
         {

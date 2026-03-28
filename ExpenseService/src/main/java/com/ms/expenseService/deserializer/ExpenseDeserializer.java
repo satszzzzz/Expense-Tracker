@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tools.jackson.databind.ObjectMapper;
 
 import java.nio.ByteBuffer;
+import java.sql.Timestamp;
 import java.util.Map;
 
 public class ExpenseDeserializer implements Deserializer<ExpenseDto> {
@@ -22,10 +23,13 @@ public class ExpenseDeserializer implements Deserializer<ExpenseDto> {
 
     @Override
     public ExpenseDto deserialize(String s, byte[] bytes) {
+        if(bytes == null)
+            return null;
         ExpenseDto expenseDto = null;
         try
         {
             expenseDto = objectMapper.readValue(bytes, ExpenseDto.class);
+            expenseDto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         }
         catch(Exception e)
         {

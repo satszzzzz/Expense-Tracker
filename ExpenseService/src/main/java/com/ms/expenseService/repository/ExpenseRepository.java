@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findByUserId(String userId);
 
-    List<Expense> findByUserIdAndCreatedAtBetween(String userId, Timestamp createdAt);
+    List<Expense> findByUserIdAndCreatedAt(String userId, Timestamp createdAt);
 
     Optional<Expense> findByUserIdAndExternalId(String userId, String externalId);
 }

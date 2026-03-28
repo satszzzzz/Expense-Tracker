@@ -32,7 +32,7 @@ public class ExpenseController {
     }
 
     @PostMapping("/expense/v1/createExpense")
-    public ResponseEntity<> createExpense(@RequestBody ExpenseDto expenseDto)
+    public ResponseEntity<Boolean> createExpense(@RequestBody ExpenseDto expenseDto)
     {
         Boolean flag = expenseService.createExpense(expenseDto);
         if(flag)

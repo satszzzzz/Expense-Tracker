@@ -40,7 +40,7 @@ public class ExpenseService {
             return false;
         Expense expense = expenseToBeUpdated.get();
         expense.setCurrency(Strings.isNotBlank(expenseDto.getCurrency())?expenseDto.getCurrency():expense.getCurrency());
-        expense.setMerchant(Strings.isNotBlank(expenseDto.getMerchant())? expenseDto.getMerchant() : :expense.getMerchant());
+        expense.setMerchant(Strings.isNotBlank(expenseDto.getMerchant())? expenseDto.getMerchant() : expense.getMerchant());
         expense.setAmount(expenseDto.getAmount());
         expenseRepository.save(expense);
         return true;
