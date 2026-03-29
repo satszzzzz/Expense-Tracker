@@ -13,8 +13,6 @@ import java.util.Map;
 
 public class ExpenseDeserializer implements Deserializer<ExpenseDto> {
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
@@ -26,6 +24,7 @@ public class ExpenseDeserializer implements Deserializer<ExpenseDto> {
         if(bytes == null)
             return null;
         ExpenseDto expenseDto = null;
+        ObjectMapper objectMapper= new ObjectMapper();
         try
         {
             expenseDto = objectMapper.readValue(bytes, ExpenseDto.class);
